@@ -5,18 +5,18 @@ import {
     TouchableOpacity,
     Image
 } from 'react-native';
-import { AuthLayout} from '../';
-import {FONTS, SIZES, COLORS, icons} from '../../constants';
-import {FormInput,TextButton} from '../../components';
-import {utils} from '../../utils';
+import AuthLayout from './AuthLayout';
+import { FONTS, SIZES, COLORS, icons } from '../../constants';
+import { FormInput, TextButton } from '../../components';
+import { utils } from '../../utils';
 
-const ForgotPassword = ({navigation}) => {
+const ForgotPassword = ({ navigation }) => {
 
-    const [email,setEmail] = React.useState("")
-    const [emailError,setEmailError] = React.useState("")
+    const [email, setEmail] = React.useState("")
+    const [emailError, setEmailError] = React.useState("")
 
     function isEnableSendEmail() {
-        return email !=  ""  && emailError == "";
+        return email != "" && emailError == "";
     }
 
     return (
@@ -24,37 +24,37 @@ const ForgotPassword = ({navigation}) => {
             title="Password Recovery"
             subtitle="Please entry your email address to recover your password"
             titleContainerStyle={{
-                marginTop:SIZES.padding*2
+                marginTop: SIZES.padding * 2
             }}
         >
             {/*Form Input */}
             <View
                 style={{
-                    flex:1,
-                    marginTop:SIZES.padding*2
+                    flex: 1,
+                    marginTop: SIZES.padding * 2
                 }}
             >
-                <FormInput 
+                <FormInput
                     label="Email"
                     keyboardType="email-address"
                     autoCompleteType="email"
                     onChange={(value) => {
-                        utils.validateEmail(value,setEmailError)
+                        utils.validateEmail(value, setEmailError)
                         setEmail(value)
                     }}
                     errorMsg={emailError}
                     appendComponent={
                         <View
-                            style={{justifyContent:'center'}}
+                            style={{ justifyContent: 'center' }}
                         >
-                            <Image 
+                            <Image
                                 source={email == "" || (email != "" && emailError == "") ?
-                                icons.correct : icons.cross}
+                                    icons.correct : icons.cross}
                                 style={{
-                                    height:20,
-                                    width:20,
+                                    height: 20,
+                                    width: 20,
                                     tintColor: email == "" ? COLORS.gray : (email != "" &&
-                                    emailError == "") ? COLORS.green : COLORS.red
+                                        emailError == "") ? COLORS.green : COLORS.red
                                 }}
                             />
                         </View>
@@ -62,15 +62,15 @@ const ForgotPassword = ({navigation}) => {
                 />
             </View>
 
-            {/*Button */}
-            <TextButton 
+            {/*Button 在大view外面 跟着键盘抬起 */}
+            <TextButton
                 label="Send Email"
                 disabled={isEnableSendEmail() ? false : true}
                 buttonContainerStyle={{
-                    height:55,
-                    alignItems:'center',
-                    marginTop:SIZES.padding,
-                    borderRadius:SIZES.radius,
+                    height: 55,
+                    alignItems: 'center',
+                    marginTop: SIZES.padding,
+                    borderRadius: SIZES.radius,
                     backgroundColor: isEnableSendEmail() ? COLORS.primary : COLORS.transparentPrimary
                 }}
                 onPress={() => navigation.goBack()}

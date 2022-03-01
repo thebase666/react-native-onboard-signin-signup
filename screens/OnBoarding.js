@@ -1,4 +1,3 @@
-// import { isTSMethodSignature } from '@babel/types';
 import React from 'react';
 import {
     View,
@@ -15,13 +14,12 @@ const OnBoarding = ({ navigation }) => {
     const scrollX = React.useRef(new Animated.Value(0)).current;//两个animated挂钩 
     // flatlist里面滑动onScroll={Animated.event 其他animated跟着动 
 
-    // const flatListRef = React.useRef();
+    const flatListRef = React.useRef();//button调用滑动 
 
-    // const [currentIndex, setCurrentIndex] = React.useState(0);
-
-    // const onViewChangeRef = React.useRef(({ viewableItems, changed }) => {
-    //     setCurrentIndex(viewableItems[0].index)
-    // })
+    const [currentIndex, setCurrentIndex] = React.useState(0);//用这两个可找到最后页面
+    const onViewChangeRef = React.useRef(({ viewableItems, changed }) => {
+        setCurrentIndex(viewableItems[0].index)
+    })
 
     const Dots = () => {
         const dotPosition = Animated.divide(scrollX, SIZES.width)
@@ -85,6 +83,77 @@ const OnBoarding = ({ navigation }) => {
                 >
                     <Dots />
                 </View>
+                {/*Buttons */}
+                {currentIndex < 2 &&
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            paddingHorizontal: SIZES.padding,
+                            marginVertical: SIZES.padding
+                        }}
+                    >
+                        <TextButton
+                            label="Skip"
+                            buttonContainerStyle={{
+                                backgroundColor: null
+                            }}
+                            labelStyle={{
+                                color: COLORS.darkGray2
+                            }}
+                            onPress={() => navigation.replace("SignIn")}//用replace 不能goback
+                        />
+
+                        <TextButton
+                            label="Next"
+                            buttonContainerStyle={{
+                                height: 60,
+                                width: 200,
+                                borderRadius: SIZES.radius
+                            }}
+                            onPress={() => {
+                                let index = Math.ceil(Number(scrollX._value / SIZES.width))
+                                // console.log(scrollX._value)//0 384 768
+                                // console.log(SIZES.width)//384 384 384
+                                // console.log(index)//0 1 2
+                                if (index < constants.onboarding_screens.length - 1) {
+                                    flatListRef?.current?.scrollToIndex({//用ref调用滑动
+                                        index: index + 1,
+                                        animated: true
+                                    })
+                                } else {
+                                    navigation.replace("SignIn")
+                                }
+                            }}
+                        />
+                    </View>
+                }
+                {currentIndex > 1 &&
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            paddingHorizontal: SIZES.padding,
+                            marginVertical: SIZES.padding,
+                            justifyContent: 'center',
+
+                        }}
+                    >
+
+                        <TextButton
+                            label="Let's Go"
+                            buttonContainerStyle={{
+                                justifyContent: 'center',
+                                height: 60,
+                                width: 300,
+                                borderRadius: SIZES.radius
+                            }}
+                            onPress={() => {
+                                navigation.replace("SignIn")
+                            }}
+                        />
+                    </View>
+                }
             </View>
         )
     }
@@ -97,7 +166,7 @@ const OnBoarding = ({ navigation }) => {
             }}
         >
             <Animated.FlatList
-                // ref={flatListRef}
+                ref={flatListRef}//这个挂上能用button控制滑动
                 horizontal
                 pagingEnabled//分页滑动 否则就是直接滑动 不需要Animated
                 data={constants.onboarding_screens}
@@ -110,7 +179,7 @@ const OnBoarding = ({ navigation }) => {
                     ],
                     { useNativeDriver: false }
                 )}
-                // onViewableItemsChanged={onViewChangeRef.current}
+                onViewableItemsChanged={onViewChangeRef.current}//滑动触发函数 改变index 找最后页面
                 keyExtractor={(item) => `${item.id}`}
                 renderItem={({ item, index }) => {
                     return (

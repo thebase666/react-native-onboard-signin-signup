@@ -1,22 +1,22 @@
 import React from 'react';
-import {View,Text,Image} from 'react-native';
+import { View, Text, Image, ScrollView } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {images, FONTS, SIZES, COLORS} from '../../constants';
+import { images, FONTS, SIZES, COLORS } from '../../constants';
 
-const AuthLayout = ({title,subtitle,titleContainerStyle,children}) =>{ 
-    return(
+const AuthLayout = ({ title, subtitle, titleContainerStyle, children }) => {
+    return (
         <View
             style={{
-                flex:1,
-                paddingVertical:SIZES.padding,
-                backgroundColor:COLORS.white
+                flex: 1,
+                paddingVertical: SIZES.padding,
+                backgroundColor: COLORS.white
             }}
         >
-            <KeyboardAwareScrollView
+            <ScrollView
                 keyboardDismissMode="on-drag"
                 contentContainerStyle={{
-                    flex:1,
-                    paddingHorizontal:SIZES.padding
+                    flex: 1,
+                    paddingHorizontal: SIZES.padding
                 }}
             >
                 {/*App icon */}
@@ -25,25 +25,25 @@ const AuthLayout = ({title,subtitle,titleContainerStyle,children}) =>{
                         alignItems: 'center'
                     }}
                 >
-                    <Image 
+                    <Image
                         source={images.logo_02}
                         resizeMode="contain"
                         style={{
-                            height:100,
-                            width:200
+                            height: 100,
+                            width: 200
                         }}
                     />
                 </View>
                 {/*Title & Subtitle */}
                 <View
                     style={{
-                        marginTop:SIZES.padding,
+                        marginTop: SIZES.padding,
                         ...titleContainerStyle
                     }}
                 >
                     <Text
                         style={{
-                            textAlign:'center',
+                            textAlign: 'center',
                             ...FONTS.h2
                         }}
                     >
@@ -51,9 +51,9 @@ const AuthLayout = ({title,subtitle,titleContainerStyle,children}) =>{
                     </Text>
                     <Text
                         style={{
-                            textAlign:'center',
-                            color:COLORS.darkGray,
-                            marginTop:SIZES.base,
+                            textAlign: 'center',
+                            color: COLORS.darkGray,
+                            marginTop: SIZES.base,
                             ...FONTS.body3
                         }}
                     >
@@ -62,7 +62,7 @@ const AuthLayout = ({title,subtitle,titleContainerStyle,children}) =>{
                 </View>
                 {/*Content & Children */}
                 {children}
-            </KeyboardAwareScrollView>
+            </ScrollView>
         </View>
     )
 }

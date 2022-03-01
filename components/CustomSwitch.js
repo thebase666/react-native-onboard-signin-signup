@@ -5,16 +5,18 @@ import {
     TouchableWithoutFeedback,
     StyleSheet
 } from 'react-native';
-import { FONTS, SIZES, COLORS} from '../constants';
+import { FONTS, SIZES, COLORS } from '../constants';
 
-const CustomSwitch = ({value,onChange}) => {
-    return(
+const CustomSwitch = ({ value, onChange }) => {
+    return (
         <TouchableWithoutFeedback
-            onPress={() =>onChange(!value)}
+            onPress={() => onChange(!value)}
         >
             <View
                 style={{
-                    flexDirection:'row'
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
                 }}
             >
                 {/*Switch */}
@@ -24,7 +26,7 @@ const CustomSwitch = ({value,onChange}) => {
                     <View
                         style={{
                             ...styles.dot,
-                            backgroundColor:value ? COLORS.white : COLORS.gray
+                            backgroundColor: value ? COLORS.white : COLORS.gray
                         }}
                     />
                 </View>
@@ -33,7 +35,7 @@ const CustomSwitch = ({value,onChange}) => {
                 <Text
                     style={{
                         color: value ? COLORS.primary : COLORS.gray,
-                        marginLeft:SIZES.base,
+                        marginLeft: SIZES.base,
                         ...FONTS.body4
                     }}
                 >
@@ -45,28 +47,28 @@ const CustomSwitch = ({value,onChange}) => {
 }
 
 const styles = StyleSheet.create({
-    switchOnContainer:{
-        width:40,
-        height:20,
-        paddingRight:2,
-        justifyContent:'center',
+    switchOnContainer: {
+        width: 40,
+        height: 20,
+        paddingRight: 2,
+        justifyContent: 'center',
         alignItems: 'flex-end',
-        borderRadius:10,
-        backgroundColor:COLORS.primary
+        borderRadius: 10,
+        backgroundColor: COLORS.primary
     },
-    switchOffContainer:{
-        width:40,
-        height:20,
-        paddingLeft:2,
-        justifyContent:'center',
-        borderWidth:1,
-        borderColor:COLORS.gray,
-        borderRadius:10
+    switchOffContainer: {
+        width: 40,
+        height: 20,
+        paddingLeft: 2,
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: COLORS.gray,
+        borderRadius: 10
     },
-    dot:{
-        width:12,
-        height:12,
-        borderRadius:6
+    dot: {
+        width: 12,
+        height: 12,
+        borderRadius: 6
     }
 })
 
